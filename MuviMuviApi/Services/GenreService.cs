@@ -14,6 +14,16 @@ public class GenreService
 
     public async Task<List<Genre>> GetAllGenresAsync()
     {
-        return await _genreRepository.GetAllGenresAsync();
+        return await _genreRepository.GetAllAsync();
+    }
+
+    public async Task<Genre> GetGenreByIdAsync(int id)
+    {
+        var genre = await _genreRepository.GetByIdAsync(id);
+
+        if (genre == null)
+            throw new KeyNotFoundException($"Genre with id {id} not found");
+
+        return genre;
     }
 }

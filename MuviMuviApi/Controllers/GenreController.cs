@@ -26,4 +26,19 @@ public class GenreController : ControllerBase
         var genresDto = _mapper.Map<List<GenreDto>>(genres);
         return genresDto;
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<GenreDto>> GetGenreByIdAsync([FromRoute] int id)
+    {
+        try
+        {
+            var genre = await _genreService.GetGenreByIdAsync(id);
+            var genreDto = _mapper.Map<GenreDto>(genre);
+            return genreDto;
+        }
+        catch (KeyNotFoundException keyNotFoundEx)
+        {
+            return NotFound(keyNotFoundEx.Message);
+        }
+    }
 }

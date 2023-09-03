@@ -13,8 +13,13 @@ public class EfGenreRepository: IGenreRepository
         _context = context;
     }
 
-    public async Task<List<Genre>> GetAllGenresAsync()
+    public async Task<List<Genre>> GetAllAsync()
     {
         return await _context.Genres.ToListAsync();
+    }
+
+    public async Task<Genre> GetByIdAsync(int id)
+    {
+        return await _context.Genres.FirstOrDefaultAsync(g => g.Id == id);
     }
 }
