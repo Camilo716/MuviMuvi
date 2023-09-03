@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using MuviMuviApi.Data;
+using MuviMuviApi.Data.EntityFramework;
 
 namespace MuviMuviApi;
 
@@ -15,6 +15,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddAutoMapper(typeof(Startup));
+
         services.AddControllers()
                 .AddJsonOptions(
                     x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

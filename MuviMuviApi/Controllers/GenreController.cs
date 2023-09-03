@@ -1,5 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MuviMuviApi.Data.Repositories;
+using MuviMuviApi.Models;
+using MuviMuviApi.Services;
 
 namespace MuviMuviApi.Controllers;
 
@@ -7,15 +10,20 @@ namespace MuviMuviApi.Controllers;
 [Route("api/[controller]")]
 public class GenreController : ControllerBase
 {
-    private readonly IGenreRepository _genreRepository;
+    private readonly GenreService _genreService;
+    private readonly IMapper _mapper;
 
-    public GenreController(IGenreRepository genreRepository)
+    public GenreController(GenreService genreService, IMapper mapper)
     {
-        _genreRepository = genreRepository;
+        _genreService = genreService;
+        _mapper = mapper;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<string>> GetGenresAsync(string value)
-    // {
-    // }
+    [HttpGet]
+    public async Task<ActionResult<List<GenreDto>>> GetAllGenresAsync(string value)
+    {
+        var genres = await _genreService.GetAllGenresAsync();
+        var genresDto = _mapper.Map<List<GenreDto>>(genres);
+        return genresDto;
+    }
 }

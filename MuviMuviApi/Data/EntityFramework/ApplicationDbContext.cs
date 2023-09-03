@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MuviMuviApi.Models;
 
-namespace MuviMuviApi.Data;
+namespace MuviMuviApi.Data.EntityFramework;
 
 public class ApplicationDbContext : DbContext
 {
