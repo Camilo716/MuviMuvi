@@ -9,3 +9,5 @@ startup.ConfigureServices(builder.Services);
 var app = builder.Build();
 
 startup.ConfigureMiddlewares(app, app.Environment);
+
+app.Run();
