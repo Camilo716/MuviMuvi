@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using MuviMuviApi.Data.EntityFramework;
+using MuviMuviApi.Data.Repositories;
 
 namespace MuviMuviApi;
 
@@ -25,6 +26,7 @@ public class Startup
             options => 
                 options.UseSqlServer(_config.GetConnectionString("dockerConnection"))
             );
+        services.AddScoped<IGenreRepository, EfGenreRepository>();
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
