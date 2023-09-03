@@ -3,11 +3,11 @@ using Xunit.Sdk;
 
 namespace Tests;
 
-public class Get_EnpointsTests : IClassFixture<WebApplicationFactory<Program>>
+public class Get_GenreTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
 
-    public Get_EnpointsTests(WebApplicationFactory<Program> factory)
+    public Get_GenreTests(WebApplicationFactory<Program> factory)
     {
         _factory = factory; 
     }
