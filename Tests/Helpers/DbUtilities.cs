@@ -1,11 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using MuviMuviApi.Data.EntityFramework;
 using MuviMuviApi.Models;
 
 namespace Test.Helpers;
 
-
-public static class Utilities
+public static class DbUtilities
 {
+    public static Task<int> GetGenreRecordCount(ApplicationDbContext db)
+    {
+        return db.Genres.CountAsync();
+    }
+
     public static void ReinitializeDbForTests(ApplicationDbContext db)
     {
         db.Genres.RemoveRange(db.Genres);
@@ -17,7 +22,6 @@ public static class Utilities
         db.Genres.AddRange(GetSeedingGenres());
         db.SaveChanges();
     }
-
 
     private static List<Genre> GetSeedingGenres()
     {

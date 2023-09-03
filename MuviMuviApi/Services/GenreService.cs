@@ -26,4 +26,9 @@ public class GenreService
 
         return genre;
     }
+
+    public async Task<Genre> PostGenreAsync(Genre genre)
+    {
+        return await _genreRepository.SaveAsync(genre);
+    }
 }
