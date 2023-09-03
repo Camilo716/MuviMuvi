@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public class GenreDto
+public class GenreDTO
 {
     public int Id { get; set; }
 

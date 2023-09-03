@@ -53,6 +53,7 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         HttpResponseMessage response = await client.PostAsync("api/genre", genre);
 
         int counterAfter = await DbUtilities.GetGenreRecordCount(_context);
+        response.EnsureSuccessStatusCode();
         Assert.Equal(counterBefore+1, counterAfter);
     }
 

@@ -20,20 +20,20 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<GenreDto>>> GetAllsAsync()
+    public async Task<ActionResult<List<GenreDTO>>> GetAllsAsync()
     {
         var genres = await _genreService.GetAllGenresAsync();
-        var genresDto = _mapper.Map<List<GenreDto>>(genres);
+        var genresDto = _mapper.Map<List<GenreDTO>>(genres);
         return genresDto;
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<GenreDto>> GetByIdAsync([FromRoute] int id)
+    public async Task<ActionResult<GenreDTO>> GetByIdAsync([FromRoute] int id)
     {
         try
         {
             var genre = await _genreService.GetGenreByIdAsync(id);
-            var genreDto = _mapper.Map<GenreDto>(genre);
+            var genreDto = _mapper.Map<GenreDTO>(genre);
             return genreDto;
         }
         catch (KeyNotFoundException keyNotFoundEx)
@@ -43,7 +43,7 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<GenreDto>> PostAsync([FromBody] GenreDto genreDto)
+    public async Task<ActionResult<GenreCreationDTO>> PostAsync([FromBody] GenreCreationDTO genreDto)
     {
         var genre = _mapper.Map<Genre>(genreDto);
         var genrePosted = await _genreService.PostGenreAsync(genre);

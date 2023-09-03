@@ -7,6 +7,7 @@ public class AutoMapperProfiles: Profile
 {
     public AutoMapperProfiles()
     {
-        CreateMap<Genre, GenreDto>().ReverseMap(); 
+        CreateMap<Genre, GenreDTO>(); 
+        CreateMap<GenreCreationDTO, Genre>(); 
     }
 }
