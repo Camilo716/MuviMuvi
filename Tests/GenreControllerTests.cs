@@ -13,12 +13,13 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly ApplicationDbContext _context;
+    private readonly List<int> _seedGenresIds;
 
     public GenreControllerTests(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
         _context = GetDbContext();
-        DbUtilities.ReinitializeDbForTests(_context);
+        _seedGenresIds = DbUtilities.ReinitializeDbForTests(_context);
     }
 
     [Theory]
@@ -32,6 +33,19 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.Equal("application/json; charset=utf-8", 
             response.Content.Headers.ContentType?.ToString());
+    }
+
+    [Fact]
+    public async Task GetByIdReturnSuccessAndCorrectRecord()
+    {
+        HttpClient client = _factory.CreateClient();
+
+        HttpResponseMessage response = await client.GetAsync($"api/genre/{_seedGenresIds[0]}");
+
+        var responseBody = await response.Content.ReadAsStringAsync();
+
+        response.EnsureSuccessStatusCode();
+        Assert.Contains("Action", responseBody);
     }
 
     [Fact]
@@ -60,6 +74,8 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
                 "Headers don't contain location");
     }
 
+    // [Fact]
+    // public async 
 
     private ApplicationDbContext GetDbContext()
     {

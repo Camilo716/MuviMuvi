@@ -11,16 +11,21 @@ public static class DbUtilities
         return db.Genres.CountAsync();
     }
 
-    public static void ReinitializeDbForTests(ApplicationDbContext db)
+    public static List<int> ReinitializeDbForTests(ApplicationDbContext db)
     {
         db.Genres.RemoveRange(db.Genres);
-        InitializeDbForTests(db);
+        var seedGenresIds =  InitializeDbForTests(db);
+        return seedGenresIds;
     }
 
-    private static void InitializeDbForTests(ApplicationDbContext db)
+    private static List<int> InitializeDbForTests(ApplicationDbContext db)
     {
-        db.Genres.AddRange(GetSeedingGenres());
+        var seedGenres = GetSeedingGenres();
+        db.Genres.AddRange(seedGenres);
         db.SaveChanges();
+
+        var seedGenresIds = seedGenres.Select(genre => genre.Id).ToList();
+        return seedGenresIds;
     }
 
     private static List<Genre> GetSeedingGenres()
