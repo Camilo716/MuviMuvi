@@ -31,4 +31,9 @@ public class GenreService
     {
         return await _genreRepository.SaveAsync(genre);
     }
+
+    public async Task<Genre> PutGenreAsync(int id, Genre genre)
+    {
+        return await _genreRepository.UpdateAsync(id, genre);
+    }
 }

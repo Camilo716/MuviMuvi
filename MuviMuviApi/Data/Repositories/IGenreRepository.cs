@@ -4,7 +4,8 @@ namespace MuviMuviApi.Data.Repositories;
 
 public interface IGenreRepository
 {
-    public Task<List<Genre>> GetAllAsync();
-    public Task<Genre> GetByIdAsync(int id);
-    public Task<Genre> SaveAsync(Genre genre);
+    Task<List<Genre>> GetAllAsync();
+    Task<Genre> GetByIdAsync(int id);
+    Task<Genre> SaveAsync(Genre genre);
+    Task<Genre> UpdateAsync(int id, Genre genre);
 }

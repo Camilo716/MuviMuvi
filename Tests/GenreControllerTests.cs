@@ -74,8 +74,19 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
                 "Headers don't contain location");
     }
 
-    // [Fact]
-    // public async 
+    [Fact]
+    public async Task Put_ReturnSuccess()
+    {
+        HttpClient client = _factory.CreateClient();   
+        HttpContent newGenre = GenreUtilities.GetGenreHttpContent("NowIsAnotherGenre");
+
+        HttpResponseMessage response = await client.PutAsync(
+            $"api/genre/{_seedGenresIds[0]}", newGenre);
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        // var updatedGenre = await response.Content.ReadAsStringAsync();
+        // Assert.Equal("NowIsAnotherGenre", updatedGenre.Name);
+    } 
 
     private ApplicationDbContext GetDbContext()
     {

@@ -29,4 +29,12 @@ public class EfGenreRepository: IGenreRepository
         await _context.SaveChangesAsync();
         return genreEntry.Entity;    
     }
+
+    public async Task<Genre> UpdateAsync(int id, Genre genre)
+    {
+        genre.Id = id;
+        _context.Entry(genre).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+        return genre;
+    }
 }
