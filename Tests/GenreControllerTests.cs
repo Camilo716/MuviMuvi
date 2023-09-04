@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,9 +54,12 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         HttpResponseMessage response = await client.PostAsync("api/genre", genre);
 
         int counterAfter = await DbUtilities.GetGenreRecordCount(_context);
-        response.EnsureSuccessStatusCode();
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         Assert.Equal(counterBefore+1, counterAfter);
+        Assert.True(response.Headers.Contains("Location"), 
+                "Headers don't contain location");
     }
+
 
     private ApplicationDbContext GetDbContext()
     {
