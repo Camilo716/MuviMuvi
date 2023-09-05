@@ -18,7 +18,7 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
     public GenreControllerTests(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
-        _context = GetDbContext();
+        _context = DbContextUtilities.GetDbContext(factory);
         _seedGenresIds = DbUtilities.ReinitializeDbForTests(_context).GenresIds!;
     }
 
@@ -112,13 +112,5 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
             $"api/genre/-1");
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-    private ApplicationDbContext GetDbContext()
-    {
-        var scope = _factory.Services.CreateScope();
-        var scopedServices = scope.ServiceProvider;
-        var db = scopedServices.GetRequiredService<ApplicationDbContext>();
-        return db;
     }
 }
