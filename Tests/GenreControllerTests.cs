@@ -1,7 +1,5 @@
 using System.Net;
-using Azure;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MuviMuviApi.Data.EntityFramework;
 using MuviMuviApi.Models;
@@ -21,7 +19,7 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
     {
         _factory = factory;
         _context = GetDbContext();
-        _seedGenresIds = DbUtilities.ReinitializeDbForTests(_context);
+        _seedGenresIds = DbUtilities.ReinitializeDbForTests(_context).GenresIds!;
     }
 
     [Theory]

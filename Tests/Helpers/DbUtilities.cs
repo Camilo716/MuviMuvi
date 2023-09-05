@@ -11,21 +11,23 @@ public static class DbUtilities
         return db.Genres.CountAsync();
     }
 
-    public static List<int> ReinitializeDbForTests(ApplicationDbContext db)
+    public static SeedDataIds ReinitializeDbForTests(ApplicationDbContext db)
     {
         db.Genres.RemoveRange(db.Genres);
-        var seedGenresIds =  InitializeDbForTests(db);
-        return seedGenresIds;
+        SeedDataIds seedData =  InitializeDbForTests(db);
+        return seedData;
     }
 
-    private static List<int> InitializeDbForTests(ApplicationDbContext db)
+    private static SeedDataIds InitializeDbForTests(ApplicationDbContext db)
     {
         var seedGenres = GetSeedingGenres();
         db.Genres.AddRange(seedGenres);
         db.SaveChanges();
 
-        var seedGenresIds = seedGenres.Select(genre => genre.Id).ToList();
-        return seedGenresIds;
+        List<int> seedGenresIds = seedGenres.Select(genre => genre.Id).ToList();
+
+        SeedDataIds seedData = new SeedDataIds(seedGenresIds);
+        return seedData;
     }
 
     private static List<Genre> GetSeedingGenres()
@@ -36,5 +38,21 @@ public static class DbUtilities
             new Genre(){Name="Horror" },
             new Genre(){Name="Fantasy"}
         };
+    }
+}
+
+public class SeedDataIds
+{
+    public List<int>? GenresIds { get; set;}
+    public List<int>? ActorsIds { get; set;}
+
+    public SeedDataIds(List<int> GenresIds, List<int> ActorsIds)
+    {
+        this.GenresIds = GenresIds;
+        this.ActorsIds = ActorsIds;   
+    }
+    public SeedDataIds(List<int> GenresIds)
+    {
+        this.GenresIds = GenresIds; 
     }
 }
