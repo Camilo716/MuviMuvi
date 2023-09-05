@@ -85,11 +85,8 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
             $"api/genre/{_seedGenresIds[0]}", newGenre);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        // HttpResponseMessage getResponse = await client.GetAsync(
-        //     $"api/genre/{_seedGenresIds[0]}");
         string genreJson = await response.Content.ReadAsStringAsync();
         Genre genreUpdated = JsonConvert.DeserializeObject<Genre>(genreJson);
-
         Assert.Equal("NowIsAnotherGenre", genreUpdated.Name);
     } 
 
