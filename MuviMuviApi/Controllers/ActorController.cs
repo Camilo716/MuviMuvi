@@ -2,6 +2,7 @@ namespace MuviMuviApi.Controllers;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MuviMuviApi.Models;
 using MuviMuviApi.Services;
 
 [ApiController]
@@ -15,5 +16,11 @@ public class ActorController : ControllerBase
     {
         _actorService = actorService;
         _mapper = mapper;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<Actor>>> GetAsync()
+    {
+        return await _actorService.GetAllActorsAsync();
     }
 }

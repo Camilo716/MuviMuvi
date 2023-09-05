@@ -13,8 +13,9 @@ public static class DbUtilities
 
     public static SeedDataIds ReinitializeDbForTests(ApplicationDbContext db)
     {
-        db.Genres.RemoveRange(db.Genres);
+        // throw new Exception(db.ContextId.ToString());
         SeedDataIds seedData =  InitializeDbForTests(db);
+        db.Genres.RemoveRange(db.Genres);
         return seedData;
     }
 

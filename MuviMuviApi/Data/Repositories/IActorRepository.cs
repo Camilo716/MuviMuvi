@@ -1,6 +1,9 @@
+
+using MuviMuviApi.Models;
+
 namespace MuviMuviApi.Data.Repositories;
 
-public class IActorRepository
+public interface IActorRepository
 {
-    
+    Task<List<Actor>> GetAll();
 }

@@ -30,6 +30,8 @@ public class Startup
   
         services.AddScoped<IGenreRepository, EfGenreRepository>();
         services.AddScoped<GenreService>();
+        services.AddScoped<IActorRepository, EfActorRepository>();
+        services.AddScoped<ActorService>();
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
