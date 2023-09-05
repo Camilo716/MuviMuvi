@@ -36,4 +36,9 @@ public class GenreService
     {
         return await _genreRepository.UpdateAsync(id, genre);
     }
+
+    internal async Task DeleteGenreAsync(int id)
+    {
+        await _genreRepository.DeleteAsync(id);
+    }
 }

@@ -61,4 +61,11 @@ public class GenreController : ControllerBase
         GenreDTO genreDto = _mapper.Map<GenreDTO>(genre);
         return Ok(genreDto);
     }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteAsync(int id)
+    {
+        await _genreService.DeleteGenreAsync(id);
+        return NoContent();
+    }
 }

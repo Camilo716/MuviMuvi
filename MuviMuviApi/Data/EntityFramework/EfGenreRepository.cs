@@ -37,4 +37,10 @@ public class EfGenreRepository: IGenreRepository
         await _context.SaveChangesAsync();
         return genre;
     }
+
+    public async Task DeleteAsync(int id)
+    {
+        _context.Remove(new Genre { Id = id });
+        await _context.SaveChangesAsync();
+    }
 }

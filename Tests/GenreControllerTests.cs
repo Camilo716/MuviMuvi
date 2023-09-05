@@ -1,4 +1,5 @@
 using System.Net;
+using Azure;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -89,6 +90,20 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         Genre genreUpdated = JsonConvert.DeserializeObject<Genre>(genreJson);
         Assert.Equal("NowIsAnotherGenre", genreUpdated.Name);
     } 
+
+    [Fact]
+    public async Task Delete_ReturnSuccess()
+    {
+        HttpClient client = _factory.CreateClient();   
+        
+        HttpResponseMessage response = await client.DeleteAsync(
+            $"api/genre/{_seedGenresIds[0]}");
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        HttpResponseMessage getResponse = await client.GetAsync(
+            $"api/genre/{_seedGenresIds[0]}");
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
+    }
 
     private ApplicationDbContext GetDbContext()
     {
