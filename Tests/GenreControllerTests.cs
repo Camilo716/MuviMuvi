@@ -22,13 +22,12 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         _seedGenresIds = DbUtilities.ReinitializeDbForTests(_context).GenresIds!;
     }
 
-    [Theory]
-    [InlineData("/api/genre")]
-    public async Task Get_GeneralEndpointsReturnSuccessAndCorrectContentType(string url)
+    [Fact]
+    public async Task Get_AllGenresReturnSuccess()
     {
         HttpClient client = _factory.CreateClient();
 
-        HttpResponseMessage response = await client.GetAsync(url);
+        HttpResponseMessage response = await client.GetAsync("api/genre");
 
         response.EnsureSuccessStatusCode(); // Status Code 200-299
         Assert.Equal("application/json; charset=utf-8", 
