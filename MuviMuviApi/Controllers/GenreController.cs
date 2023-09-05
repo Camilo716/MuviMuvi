@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MuviMuviApi.Data.Repositories;
@@ -22,7 +23,7 @@ public class GenreController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<GenreDTO>>> GetAsync()
     {
-        var genres = await _genreService.GetAllGenresAsync();
+        List<Genre> genres = await _genreService.GetAllGenresAsync();
         var genresDto = _mapper.Map<List<GenreDTO>>(genres);
         return genresDto;
     }
@@ -52,10 +53,12 @@ public class GenreController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> PutAsync([FromRoute] int id, [FromBody] GenreCreationDTO genreCreationDTO)
+    public async Task<ActionResult<GenreDTO>> PutAsync([FromRoute] int id, [FromBody] GenreCreationDTO genreCreationDTO)
     {
         Genre genre = _mapper.Map<Genre>(genreCreationDTO);
         await _genreService.PutGenreAsync(id, genre);
-        return NoContent();
+
+        GenreDTO genreDto = _mapper.Map<GenreDTO>(genre);
+        return Ok(genreDto);
     }
 }

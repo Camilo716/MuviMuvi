@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MuviMuviApi.Data.EntityFramework;
 using MuviMuviApi.Models;
+using Newtonsoft.Json;
 using Test.Helpers;
 using Tests.Helpers;
 
@@ -83,9 +84,13 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         HttpResponseMessage response = await client.PutAsync(
             $"api/genre/{_seedGenresIds[0]}", newGenre);
 
-        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-        // var updatedGenre = await response.Content.ReadAsStringAsync();
-        // Assert.Equal("NowIsAnotherGenre", updatedGenre.Name);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        // HttpResponseMessage getResponse = await client.GetAsync(
+        //     $"api/genre/{_seedGenresIds[0]}");
+        string genreJson = await response.Content.ReadAsStringAsync();
+        Genre genreUpdated = JsonConvert.DeserializeObject<Genre>(genreJson);
+
+        Assert.Equal("NowIsAnotherGenre", genreUpdated.Name);
     } 
 
     private ApplicationDbContext GetDbContext()
