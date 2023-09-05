@@ -65,7 +65,14 @@ public class GenreController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteAsync(int id)
     {
-        await _genreService.DeleteGenreAsync(id);
-        return NoContent();
+        try
+        {
+            await _genreService.DeleteGenreAsync(id);
+            return NoContent();         
+        }
+        catch (KeyNotFoundException keyNotFoundEx)
+        {
+            return NotFound();
+        }
     }
 }

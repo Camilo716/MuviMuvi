@@ -9,4 +9,5 @@ public interface IGenreRepository
     Task<Genre> SaveAsync(Genre genre);
     Task<Genre> UpdateAsync(int id, Genre genre);
     Task DeleteAsync(int id);
+    Task<bool> ExistAsync(int id);
 }

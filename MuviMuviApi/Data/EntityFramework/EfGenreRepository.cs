@@ -43,4 +43,9 @@ public class EfGenreRepository: IGenreRepository
         _context.Remove(new Genre { Id = id });
         await _context.SaveChangesAsync();
     }
+
+    public Task<bool> ExistAsync(int id)
+    {
+        return _context.Genres.AnyAsync(g => g.Id == id);
+    }
 }

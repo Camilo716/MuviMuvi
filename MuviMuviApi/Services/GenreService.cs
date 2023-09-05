@@ -20,7 +20,6 @@ public class GenreService
     public async Task<Genre> GetGenreByIdAsync(int id)
     {
         var genre = await _genreRepository.GetByIdAsync(id);
-
         if (genre == null)
             throw new KeyNotFoundException($"Genre with id {id} not found");
 
@@ -39,6 +38,10 @@ public class GenreService
 
     internal async Task DeleteGenreAsync(int id)
     {
+        bool genreExist = await _genreRepository.ExistAsync(id);
+        if (!genreExist)
+            throw new KeyNotFoundException($"Genre with id {id} not found");
+
         await _genreRepository.DeleteAsync(id);
     }
 }

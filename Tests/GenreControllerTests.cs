@@ -105,6 +105,17 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 
+    [Fact]
+    public async Task When_DeleteGenre_And_GenreDoNotExist_Then_ReturnNotFound()
+    {
+        HttpClient client = _factory.CreateClient();   
+        
+        HttpResponseMessage response = await client.DeleteAsync(
+            $"api/genre/-1");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
     private ApplicationDbContext GetDbContext()
     {
         var scope = _factory.Services.CreateScope();
