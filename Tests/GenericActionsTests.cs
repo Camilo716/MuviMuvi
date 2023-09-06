@@ -48,7 +48,7 @@ public class GenericActionsTests : IClassFixture<WebApplicationFactory<Program>>
 
     [Theory]
     [InlineData($"api/genre/-1")]
-    public async Task Delete_When_DeleteRecord_And_RecordDoNotExist_Then_ReturnNotFound(string url)
+    public async Task Delete_When_RemoveRecord_And_ItDoesNotExist_Then_ReturnNotFound(string url)
     {
         HttpClient client = _factory.CreateClient();   
         
