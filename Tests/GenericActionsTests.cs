@@ -45,4 +45,15 @@ public class GenericActionsTests : IClassFixture<WebApplicationFactory<Program>>
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }  
+
+    [Theory]
+    [InlineData($"api/genre/-1")]
+    public async Task Delete_When_DeleteRecord_And_RecordDoNotExist_Then_ReturnNotFound(string url)
+    {
+        HttpClient client = _factory.CreateClient();   
+        
+        HttpResponseMessage response = await client.DeleteAsync(url);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }
