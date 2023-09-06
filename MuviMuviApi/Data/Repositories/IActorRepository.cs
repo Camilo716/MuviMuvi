@@ -5,5 +5,6 @@ namespace MuviMuviApi.Data.Repositories;
 
 public interface IActorRepository
 {
-    Task<List<Actor>> GetAll();
+    Task<List<Actor>> GetAllAsync();
+    Task<Actor> GetByIdAsync(int id);
 }

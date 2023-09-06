@@ -15,6 +15,16 @@ public class ActorService
 
     public async Task<ActionResult<List<Actor>>> GetAllActorsAsync()
     {
-        return await _actorRepository.GetAll();
+        return await _actorRepository.GetAllAsync();
+    }
+
+    public async Task<Actor> GetActorByIdAsync(int id)
+    {
+        var actor = await _actorRepository.GetByIdAsync(id);
+
+        if (actor == null)
+            throw new KeyNotFoundException($"Actor with id {id} not found");
+
+        return actor;
     }
 }

@@ -30,4 +30,16 @@ public class ActorControllerTests : IClassFixture<WebApplicationFactory<Program>
             response.Content.Headers.ContentType?.ToString());
         Assert.True(true);
     }
+
+    [Fact]
+    public async Task GetByIdReturnSuccessAndCorrectRecord()
+    {
+        HttpClient client = _factory.CreateClient();
+
+        HttpResponseMessage response = await client.GetAsync($"api/actor/{_seedActorsIds[0]}");
+
+        var responseBody = await response.Content.ReadAsStringAsync();
+        response.EnsureSuccessStatusCode();
+        Assert.Contains("Brad Pitt", responseBody);
+    }
 }

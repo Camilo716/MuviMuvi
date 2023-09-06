@@ -23,4 +23,19 @@ public class ActorController : ControllerBase
     {
         return await _actorService.GetAllActorsAsync();
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Actor>> GetByIdAsync(int id)
+    {
+        try
+        {
+            var actor = await _actorService.GetActorByIdAsync(id);
+            return Ok(actor);
+        }
+        catch (KeyNotFoundException keyNotFoundEx)
+        {
+            throw new Exception("FALLLLOOOOOOOOOOOOOOOOOOOOOOOOO");
+            return NotFound(keyNotFoundEx.Message);
+        }
+    }
 }

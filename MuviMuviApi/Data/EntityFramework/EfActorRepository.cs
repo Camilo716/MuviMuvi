@@ -13,8 +13,14 @@ public class EfActorRepository : IActorRepository
         _context = context;
     }
 
-    public async Task<List<Actor>> GetAll()
+    public async Task<List<Actor>> GetAllAsync()
     {
         return await _context.Actors.ToListAsync();
+    }
+
+    public async Task<Actor> GetByIdAsync(int id)
+    {
+        return await _context.Actors
+            .FirstOrDefaultAsync(a => a.Id == id);
     }
 }
