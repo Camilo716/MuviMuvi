@@ -27,4 +27,9 @@ public class ActorService
 
         return actor;
     }
+
+    public async Task<Actor> PostActorAsync(Actor actor)
+    {
+        return await _actorRepository.SaveAsync(actor);
+    }
 }

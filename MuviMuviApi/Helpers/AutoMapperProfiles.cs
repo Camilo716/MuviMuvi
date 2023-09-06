@@ -12,5 +12,6 @@ public class AutoMapperProfiles: Profile
         CreateMap<GenreCreationDTO, Genre>(); 
         
         CreateMap<Actor, ActorDTO>();
+        CreateMap<ActorCreationDTO, Actor>();
     }
 }

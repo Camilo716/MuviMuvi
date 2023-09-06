@@ -6,9 +6,16 @@ namespace Test.Helpers;
 
 public static class DbUtilities
 {
-    public static Task<int> GetGenreRecordCount(ApplicationDbContext db)
+    public static async Task<int> GetGenreRecordCount(ApplicationDbContext db)
     {
-        return db.Genres.CountAsync();
+        return await db.Genres.CountAsync();
+    }
+
+    public static async Task<int> GetActorRecordCount(ApplicationDbContext db)
+    {
+        var actors = db.Actors;
+        int counter = await actors.CountAsync();
+        return counter;
     }
 
     public static SeedDataIds ReinitializeDbForTests(ApplicationDbContext db)
@@ -16,6 +23,7 @@ public static class DbUtilities
         // throw new Exception(db.ContextId.ToString());
         SeedDataIds seedData =  InitializeDbForTests(db);
         db.Genres.RemoveRange(db.Genres);
+        db.Actors.RemoveRange(db.Actors);
         return seedData;
     }
 

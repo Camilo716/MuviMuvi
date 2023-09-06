@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MuviMuviApi.Data.Repositories;
 using MuviMuviApi.Models;
 
@@ -22,5 +23,12 @@ public class EfActorRepository : IActorRepository
     {
         return await _context.Actors
             .FirstOrDefaultAsync(a => a.Id == id);
+    }
+
+    public async Task<Actor> SaveAsync(Actor actor)
+    {
+        var actorEntry = await _context.AddAsync(actor); 
+        await _context.SaveChangesAsync();
+        return actorEntry.Entity;
     }
 }

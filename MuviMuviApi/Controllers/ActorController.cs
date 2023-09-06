@@ -27,7 +27,7 @@ public class ActorController : ControllerBase
         return Ok(actorsDto);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}", Name = "GetActorById")]
     public async Task<ActionResult<ActorDTO>> GetByIdAsync(int id)
     {
         try
@@ -40,5 +40,15 @@ public class ActorController : ControllerBase
         {
             return NotFound(keyNotFoundEx.Message);
         }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ActorDTO>> PostAsync([FromBody] ActorCreationDTO actorCreationDTO)
+    {
+        Actor actor = _mapper.Map<Actor>(actorCreationDTO);
+        Actor actorPosted = await _actorService.PostActorAsync(actor);
+
+        ActorDTO genreResponse = _mapper.Map<ActorDTO>(actorPosted);
+        return CreatedAtRoute("GetActorById", new { id = genreResponse.Id}, genreResponse);
     }
 }

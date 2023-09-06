@@ -28,7 +28,7 @@ public class GenreController : ControllerBase
         return genresDto;
     }
 
-    [HttpGet("{id:int}", Name = "GetById")]
+    [HttpGet("{id:int}", Name = "GetGenreById")]
     public async Task<ActionResult<GenreDTO>> GetByIdAsync([FromRoute] int id)
     {
         try
@@ -44,12 +44,12 @@ public class GenreController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<GenreCreationDTO>> PostAsync([FromBody] GenreCreationDTO genreCreationDto)
+    public async Task<ActionResult<GenreDTO>> PostAsync([FromBody] GenreCreationDTO genreCreationDto)
     {
         Genre genre = _mapper.Map<Genre>(genreCreationDto);
         Genre genrePosted = await _genreService.PostGenreAsync(genre);
         GenreDTO genreResponse = _mapper.Map<GenreDTO>(genrePosted);
-        return CreatedAtRoute("GetById", new { id = genreResponse.Id}, genreResponse);
+        return CreatedAtRoute("GetGenreById", new { id = genreResponse.Id}, genreResponse);
     }
 
     [HttpPut("{id:int}")]
