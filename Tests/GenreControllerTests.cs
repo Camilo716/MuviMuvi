@@ -1,6 +1,5 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 using MuviMuviApi.Data.EntityFramework;
 using MuviMuviApi.Models;
 using Newtonsoft.Json;

@@ -2,6 +2,7 @@ namespace MuviMuviApi.Controllers;
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MuviMuviApi.DTOs;
 using MuviMuviApi.Models;
 using MuviMuviApi.Services;
 
@@ -19,18 +20,21 @@ public class ActorController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Actor>>> GetAsync()
+    public async Task<ActionResult<List<ActorDTO>>> GetAsync()
     {
-        return await _actorService.GetAllActorsAsync();
+        List<Actor> actors =  await _actorService.GetAllActorsAsync();
+        List<ActorDTO> actorsDto = _mapper.Map<List<ActorDTO>>(actors);
+        return Ok(actorsDto);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Actor>> GetByIdAsync(int id)
+    public async Task<ActionResult<ActorDTO>> GetByIdAsync(int id)
     {
         try
         {
-            var actor = await _actorService.GetActorByIdAsync(id);
-            return Ok(actor);
+            Actor actor = await _actorService.GetActorByIdAsync(id);
+            ActorDTO actorDto = _mapper.Map<ActorDTO>(actor);
+            return Ok(actorDto);
         }
         catch (KeyNotFoundException keyNotFoundEx)
         {

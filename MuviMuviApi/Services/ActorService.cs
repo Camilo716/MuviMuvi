@@ -13,7 +13,7 @@ public class ActorService
         _actorRepository = actorRepository;
     }
 
-    public async Task<ActionResult<List<Actor>>> GetAllActorsAsync()
+    public async Task<List<Actor>> GetAllActorsAsync()
     {
         return await _actorRepository.GetAllAsync();
     }
