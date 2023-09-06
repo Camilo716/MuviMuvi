@@ -22,12 +22,16 @@ public static class DbUtilities
     private static SeedDataIds InitializeDbForTests(ApplicationDbContext db)
     {
         var seedGenres = GetSeedingGenres();
+        var seedActors = GetSeedingActors();        
+
         db.Genres.AddRange(seedGenres);
+        db.Actors.AddRange(seedActors);
         db.SaveChanges();
 
         List<int> seedGenresIds = seedGenres.Select(genre => genre.Id).ToList();
+        List<int> seedActorsIds = seedActors.Select(actor => actor.Id).ToList();
 
-        SeedDataIds seedData = new SeedDataIds(seedGenresIds);
+        SeedDataIds seedData = new SeedDataIds(seedGenresIds, seedActorsIds);
         return seedData;
     }
 
@@ -38,6 +42,16 @@ public static class DbUtilities
             new Genre(){Name="Action" },
             new Genre(){Name="Horror" },
             new Genre(){Name="Fantasy"}
+        };
+    }
+
+    private static List<Actor> GetSeedingActors()
+    {
+        return new List<Actor>
+        {
+            new Actor(){Name="Brad Pitt", photoUrl = ""},
+            new Actor(){Name="Tom Cruise", photoUrl = ""},
+            new Actor(){Name="Ben Affleck", photoUrl = ""}
         };
     }
 }
