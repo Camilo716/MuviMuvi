@@ -28,7 +28,7 @@ public class ActorController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name = "GetActorById")]
-    public async Task<ActionResult<ActorDTO>> GetByIdAsync(int id)
+    public async Task<ActionResult<ActorDTO>> GetByIdAsync([FromRoute] int id)
     {
         try
         {
