@@ -13,4 +13,11 @@ internal static class GenreUtilities
         HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
         return httpContent;
     }
+
+    internal static async Task<Genre> GetGenreModelFromHttpResponse(HttpResponseMessage response)
+    {
+        string genreJson = await response.Content.ReadAsStringAsync();
+        Genre genreModel = JsonConvert.DeserializeObject<Genre>(genreJson);
+        return genreModel;
+    }
 }

@@ -49,9 +49,8 @@ public partial class ControllerTests
             $"api/genre/{_seedDataIds.GenresIds[0]}", newGenre);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        string genreJson = await response.Content.ReadAsStringAsync();
-        Genre genreUpdated = JsonConvert.DeserializeObject<Genre>(genreJson);
-        Assert.Equal("NowIsAnotherGenre", genreUpdated.Name);
+        var updatedGenre = await GenreUtilities.GetGenreModelFromHttpResponse(response);
+        Assert.Equal("NowIsAnotherGenre", updatedGenre.Name);
     } 
 
     [Fact]
