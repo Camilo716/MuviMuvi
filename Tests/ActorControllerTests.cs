@@ -36,4 +36,18 @@ public partial class ControllerTests
         Assert.True(response.Headers.Contains("Location"), 
                 "Headers don't contain location");
     }
+
+    [Fact]
+    public async Task Put_ActorReturnSuccess()
+    {
+        HttpClient client = _factory.CreateClient();   
+        HttpContent newActor = ActorUtilities.GetActorHttpContent("Actor Updated");
+
+        HttpResponseMessage response = await client.PutAsync(
+            $"api/actor/{_seedDataIds.ActorsIds[0]}", newActor);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var updatedActor = await ActorUtilities.GetActorModelFromHttpResponse(response);
+        Assert.Equal("Actor Updated", updatedActor.Name);
+    } 
 }

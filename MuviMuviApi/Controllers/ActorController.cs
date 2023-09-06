@@ -51,4 +51,15 @@ public class ActorController : ControllerBase
         ActorDTO genreResponse = _mapper.Map<ActorDTO>(actorPosted);
         return CreatedAtRoute("GetActorById", new { id = genreResponse.Id}, genreResponse);
     }
+
+
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<ActorDTO>> PutAsync([FromRoute] int id, [FromBody] ActorCreationDTO actorCreationDTO)
+    {
+        Actor actor = _mapper.Map<Actor>(actorCreationDTO);
+        await _actorService.PutActorAsync(id, actor);
+
+        ActorDTO actorDTO = _mapper.Map<ActorDTO>(actor);
+        return Ok(actorDTO);
+    }
 }

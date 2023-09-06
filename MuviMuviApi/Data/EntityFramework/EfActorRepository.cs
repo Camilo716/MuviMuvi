@@ -31,4 +31,17 @@ public class EfActorRepository : IActorRepository
         await _context.SaveChangesAsync();
         return actorEntry.Entity;
     }
+
+    public Task<bool> ExistsAsync(int id)
+    {
+        return _context.Actors.AnyAsync(a => a.Id == id);
+    }
+
+    public async Task<Actor> UpdateAsync(int id, Actor actor)
+    {
+        actor.Id = id;
+        _context.Entry(actor).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+        return actor;
+    }
 }

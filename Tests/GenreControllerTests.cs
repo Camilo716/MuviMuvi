@@ -40,7 +40,7 @@ public partial class ControllerTests
     }
 
     [Fact]
-    public async Task Put_ReturnSuccess()
+    public async Task Put_GenreReturnSuccess()
     {
         HttpClient client = _factory.CreateClient();   
         HttpContent newGenre = GenreUtilities.GetGenreHttpContent("NowIsAnotherGenre");

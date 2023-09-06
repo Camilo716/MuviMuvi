@@ -32,4 +32,19 @@ public class ActorService
     {
         return await _actorRepository.SaveAsync(actor);
     }
+
+    public async Task<Actor> PutActorAsync(int id, Actor actor)
+    {
+        return await _actorRepository.UpdateAsync(id, actor);
+    }
+
+    // public async Task<Actor> DeleteActorAsync(int id, Actor actor)
+    // {
+    //     bool exist = await _actorRepository.ExistsAsync(id);
+
+    //     if (!exist)
+    //         throw new KeyNotFoundException($"Actor with id {id} not found");
+
+    // }
+    
 }
