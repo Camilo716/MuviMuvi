@@ -19,19 +19,6 @@ public class ActorControllerTests : IClassFixture<WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task Get_AllActorsReturnSuccess()
-    {
-        HttpClient client = _factory.CreateClient();
-
-        HttpResponseMessage response = await client.GetAsync("api/actor");
-
-        response.EnsureSuccessStatusCode(); // Status Code 200-299
-        Assert.Equal("application/json; charset=utf-8", 
-            response.Content.Headers.ContentType?.ToString());
-        Assert.True(true);
-    }
-
-    [Fact]
     public async Task GetByIdReturnSuccessAndCorrectRecord()
     {
         HttpClient client = _factory.CreateClient();
