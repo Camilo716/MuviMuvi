@@ -2,20 +2,24 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MuviMuviApi.Data.EntityFramework;
+using MuviMuviApi.Models;
+using Newtonsoft.Json;
 using Test.Helpers;
+using Tests.Helpers;
 
 namespace Tests;
 
-public class GenericActionsTests : IClassFixture<WebApplicationFactory<Program>>
+public partial class ControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly ApplicationDbContext _context;
+    private readonly SeedDataIds _seedDataIds;
 
-    public GenericActionsTests(WebApplicationFactory<Program> factory)
+    public ControllerTests(WebApplicationFactory<Program> factory)
     {
         _factory = factory;
         _context = DbContextUtilities.GetDbContext(factory);
-        DbUtilities.ReinitializeDbForTests(_context);
+        _seedDataIds = DbUtilities.ReinitializeDbForTests(_context);
     }
 
     [Theory]

@@ -8,25 +8,14 @@ using Tests.Helpers;
 
 namespace Tests;
 
-public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>>
+public partial class ControllerTests
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    private readonly ApplicationDbContext _context;
-    private readonly List<int> _seedGenresIds;
-
-    public GenreControllerTests(WebApplicationFactory<Program> factory)
-    {
-        _factory = factory;
-        _context = DbContextUtilities.GetDbContext(factory);
-        _seedGenresIds = DbUtilities.ReinitializeDbForTests(_context).GenresIds!;
-    }
-
     [Fact]
-    public async Task GetByIdReturnSuccessAndCorrectRecord()
+    public async Task GetGenreByIdReturnSuccessAndCorrectRecord()
     {
         HttpClient client = _factory.CreateClient();
 
-        HttpResponseMessage response = await client.GetAsync($"api/genre/{_seedGenresIds[0]}");
+        HttpResponseMessage response = await client.GetAsync($"api/genre/{_seedDataIds.GenresIds[0]}");
 
         var responseBody = await response.Content.ReadAsStringAsync();
 
@@ -57,7 +46,7 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         HttpContent newGenre = GenreUtilities.GetGenreHttpContent("NowIsAnotherGenre");
 
         HttpResponseMessage response = await client.PutAsync(
-            $"api/genre/{_seedGenresIds[0]}", newGenre);
+            $"api/genre/{_seedDataIds.GenresIds[0]}", newGenre);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         string genreJson = await response.Content.ReadAsStringAsync();
@@ -71,11 +60,11 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
         HttpClient client = _factory.CreateClient();   
         
         HttpResponseMessage response = await client.DeleteAsync(
-            $"api/genre/{_seedGenresIds[0]}");
+            $"api/genre/{_seedDataIds.GenresIds[0]}");
 
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         HttpResponseMessage getResponse = await client.GetAsync(
-            $"api/genre/{_seedGenresIds[0]}");
+            $"api/genre/{_seedDataIds.GenresIds[0]}");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 }
