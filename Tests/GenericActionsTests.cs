@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MuviMuviApi.Data.EntityFramework;
 using Test.Helpers;
@@ -32,4 +33,16 @@ public class GenericActionsTests : IClassFixture<WebApplicationFactory<Program>>
             response.Content.Headers.ContentType?.ToString());
         Assert.True(true);
     }
+
+    [Theory]
+    [InlineData("/api/genre/-1")]
+    [InlineData("/api/actor/-1")]
+    public async Task Get_When_IdIsNotvalid_Then_ReturnNotFound(string url)
+    {
+        HttpClient client = _factory.CreateClient();
+
+        HttpResponseMessage response = await client.GetAsync(url);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }  
 }

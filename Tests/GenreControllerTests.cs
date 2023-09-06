@@ -36,16 +36,6 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task When_IdIsNotvalid_Then_ReturnNotFoundStatusCode()
-    {
-        HttpClient client = _factory.CreateClient();
-
-        HttpResponseMessage response = await client.GetAsync($"/api/genre/{-1}");
-
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    }    
-
-    [Fact]
     public async Task When_PostNewGenre_Then_GenresInDataBaseIncreased()
     {
         HttpClient client = _factory.CreateClient();   
