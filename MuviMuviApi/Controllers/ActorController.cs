@@ -34,7 +34,6 @@ public class ActorController : ControllerBase
         }
         catch (KeyNotFoundException keyNotFoundEx)
         {
-            throw new Exception("FALLLLOOOOOOOOOOOOOOOOOOOOOOOOO");
             return NotFound(keyNotFoundEx.Message);
         }
     }
