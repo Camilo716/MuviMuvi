@@ -38,13 +38,14 @@ public class ActorService
         return await _actorRepository.UpdateAsync(id, actor);
     }
 
-    // public async Task<Actor> DeleteActorAsync(int id, Actor actor)
-    // {
-    //     bool exist = await _actorRepository.ExistsAsync(id);
+    public async Task DeleteActorAsync(int id)
+    {
+        bool exist = await _actorRepository.ExistsAsync(id);
 
-    //     if (!exist)
-    //         throw new KeyNotFoundException($"Actor with id {id} not found");
+        if (!exist)
+            throw new KeyNotFoundException($"Actor with id {id} not found");
 
-    // }
-    
+        await _actorRepository.DeleteAsync(id);
+    }
+
 }

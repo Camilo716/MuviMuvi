@@ -49,5 +49,19 @@ public partial class ControllerTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         var updatedActor = await ActorUtilities.GetActorModelFromHttpResponse(response);
         Assert.Equal("Actor Updated", updatedActor.Name);
+    }
+
+    [Fact]
+    public async Task Delete_ActorReturnSuccess()
+    {
+        HttpClient client = _factory.CreateClient();   
+        
+        HttpResponseMessage response = await client.DeleteAsync(
+            $"api/actor/{_seedDataIds.ActorsIds[0]}");
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        HttpResponseMessage getResponse = await client.GetAsync(
+            $"api/actor/{_seedDataIds.ActorsIds[0]}");
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     } 
 }

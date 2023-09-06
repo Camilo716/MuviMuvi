@@ -54,7 +54,7 @@ public partial class ControllerTests
     } 
 
     [Fact]
-    public async Task Delete_ReturnSuccess()
+    public async Task Delete_GenreReturnSuccess()
     {
         HttpClient client = _factory.CreateClient();   
         

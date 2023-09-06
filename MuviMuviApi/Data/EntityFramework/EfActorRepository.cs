@@ -44,4 +44,10 @@ public class EfActorRepository : IActorRepository
         await _context.SaveChangesAsync();
         return actor;
     }
+
+    public async Task DeleteAsync(int id)
+    {
+        _context.Remove(new Actor { Id = id });
+        await _context.SaveChangesAsync();    
+    }
 }

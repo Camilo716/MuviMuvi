@@ -62,4 +62,18 @@ public class ActorController : ControllerBase
         ActorDTO actorDTO = _mapper.Map<ActorDTO>(actor);
         return Ok(actorDTO);
     }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteAsync(int id)
+    {
+        try
+        {
+            await _actorService.DeleteActorAsync(id);
+            return NoContent();         
+        }
+        catch (KeyNotFoundException keyNotFoundEx)
+        {
+            return NotFound();
+        }
+    }
 }
