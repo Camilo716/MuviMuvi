@@ -57,9 +57,9 @@ public static class DbUtilities
     {
         return new List<Actor>
         {
-            new Actor(){Name="Brad Pitt", photoUrl = ""},
-            new Actor(){Name="Tom Cruise", photoUrl = ""},
-            new Actor(){Name="Ben Affleck", photoUrl = ""}
+            new Actor(){Name="Brad Pitt"},
+            new Actor(){Name="Tom Cruise"},
+            new Actor(){Name="Ben Affleck"}
         };
     }
 }
