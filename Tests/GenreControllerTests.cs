@@ -54,7 +54,7 @@ public class GenreControllerTests : IClassFixture<WebApplicationFactory<Program>
 
         HttpResponseMessage response = await client.GetAsync($"/api/genre/{-1}");
 
-        Assert.Equal("NotFound", response.StatusCode.ToString());
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }    
 
     [Fact]

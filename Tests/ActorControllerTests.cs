@@ -42,4 +42,14 @@ public class ActorControllerTests : IClassFixture<WebApplicationFactory<Program>
         response.EnsureSuccessStatusCode();
         Assert.Contains("Brad Pitt", responseBody);
     }
+
+    [Fact]
+    public async Task When_IdIsNotvalid_Then_ReturnNotFoundStatusCode()
+    {
+        HttpClient client = _factory.CreateClient();
+
+        HttpResponseMessage response = await client.GetAsync($"/api/actor/{-1}");
+
+        Assert.Equal("NotFound", response.StatusCode.ToString());
+    }    
 }
