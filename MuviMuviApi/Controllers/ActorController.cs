@@ -73,7 +73,7 @@ public class ActorController : ControllerBase
         }
         catch (KeyNotFoundException keyNotFoundEx)
         {
-            return NotFound();
+            return NotFound(keyNotFoundEx.Message);
         }
     }
 }
