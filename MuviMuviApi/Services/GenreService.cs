@@ -5,9 +5,9 @@ namespace MuviMuviApi.Services;
 
 public class GenreService
 {
-    private readonly IGenreRepository _genreRepository;
+    private readonly IRepository<Genre> _genreRepository;
 
-    public GenreService(IGenreRepository genreRepository)
+    public GenreService(IRepository<Genre> genreRepository)
     {
         _genreRepository = genreRepository;
     }
@@ -38,7 +38,7 @@ public class GenreService
 
     internal async Task DeleteGenreAsync(int id)
     {
-        bool genreExist = await _genreRepository.ExistAsync(id);
+        bool genreExist = await _genreRepository.ExistsAsync(id);
         if (!genreExist)
             throw new KeyNotFoundException($"Genre with id {id} not found");
 

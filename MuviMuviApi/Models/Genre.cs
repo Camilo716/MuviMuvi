@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MuviMuviApi.Models;
 
-public class Genre
+public class Genre: IId
 {
     public int Id { get; set; }
 
