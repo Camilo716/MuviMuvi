@@ -6,9 +6,9 @@ namespace MuviMuviApi.Services;
 
 public class ActorService
 {
-    private readonly IActorRepository _actorRepository;
+    private readonly IRepository<Actor> _actorRepository;
 
-    public ActorService(IActorRepository actorRepository)
+    public ActorService(IRepository<Actor> actorRepository)
     {
         _actorRepository = actorRepository;
     }

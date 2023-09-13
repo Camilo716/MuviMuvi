@@ -30,12 +30,11 @@ public class Startup
                 options.UseInMemoryDatabase("InMemory")
             );
   
-        services.AddScoped<IGenreRepository, EfGenreRepository>();
         services.AddScoped<GenreService>();
-        services.AddScoped<IActorRepository, EfActorRepository>();
         services.AddScoped<ActorService>();
 
         services.AddScoped<IRepository<Genre>, EfRepository<Genre>>();
+        services.AddScoped<IRepository<Actor>, EfRepository<Actor>>();
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
