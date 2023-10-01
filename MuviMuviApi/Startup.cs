@@ -26,7 +26,7 @@ public class Startup
         
         services.AddDbContext<ApplicationDbContext>(
             options => 
-                // options.UseSqlServer(_config.GetConnectionString("defaultConnection"))
+                // options.UseSqlServer(_config.GetConnectionString("dockerConnection"))
                 options.UseInMemoryDatabase("InMemory")
             );
   

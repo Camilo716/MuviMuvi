@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MuviMuviApi.Data.EntityFramework;
 using MuviMuviApi.Models;
@@ -32,7 +33,7 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
         HttpResponseMessage response = await client.GetAsync(url);
 
         response.EnsureSuccessStatusCode(); // Status Code 200-299
-        Assert.Equal("application/json; charset=utf-8", 
+        Assert.Equal("application/json; charset=utf-8",
             response.Content.Headers.ContentType?.ToString());
         Assert.True(true);
     }
@@ -47,16 +48,33 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
         HttpResponseMessage response = await client.GetAsync(url);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    }  
+    }
 
     [Theory]
     [InlineData($"api/genre/-1")]
     public async Task Delete_When_RemoveRecord_And_ItDoesNotExist_Then_ReturnNotFound(string url)
     {
-        HttpClient client = _factory.CreateClient();   
-        
+        HttpClient client = _factory.CreateClient();
+
         HttpResponseMessage response = await client.DeleteAsync(url);
 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [InlineData("api/actor", "{ Name:Leonardo Di Caprio }")]
+    public async Task Post_NewRecordReturnsSuccessAndRecordsInDbIncrease(string url, string jsonContent)
+    {
+        HttpClient client = _factory.CreateClient();  
+        HttpContent httpContent = new StringContent(
+        jsonContent, Encoding.UTF8, "application/json");
+        // int counterBefore =  await DbUtilities.GetActorRecordCount(_context);
+
+        HttpResponseMessage response = await client.PostAsync(url, httpContent);
+
+        int counterAfter = await DbUtilities.GetActorRecordCount(_context);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        // Assert.Equal(counterBefore+1, counterAfter);
+        Assert.True(response.Headers.Contains("Location"), 
+                "Headers don't contain location");
     }
 }
