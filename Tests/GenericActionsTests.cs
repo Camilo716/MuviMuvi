@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text;
+using AutoMapper.Configuration.Conventions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
 using MuviMuviApi.Data.EntityFramework;
 using MuviMuviApi.Models;
@@ -23,9 +25,15 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
         _seedDataIds = DbUtilities.ReinitializeDbForTests(_context);
     }
 
+    const string actorBaseUrl = "api/actor/";
+    const string actorStringJson =  @"
+    {
+        ""Name"": ""Leonardo Di Caprio""
+    }";
+
     [Theory]
     [InlineData("/api/genre")]
-    [InlineData("/api/actor")]
+    [InlineData(actorBaseUrl)]
     public async Task Get_AllRecordsReturnSuccess(string url)
     {
         HttpClient client = _factory.CreateClient();
@@ -40,7 +48,7 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
 
     [Theory]
     [InlineData("/api/genre/-1")]
-    [InlineData("/api/actor/-1")]
+    [InlineData($"{actorBaseUrl}/-1")]
     public async Task Get_When_IdIsNotvalid_Then_ReturnNotFound(string url)
     {
         HttpClient client = _factory.CreateClient();
@@ -61,19 +69,16 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
-    [InlineData("api/actor", "{ Name:Leonardo Di Caprio }")]
+    [Theory]
+    [InlineData(actorBaseUrl, actorStringJson)]
     public async Task Post_NewRecordReturnsSuccessAndRecordsInDbIncrease(string url, string jsonContent)
     {
         HttpClient client = _factory.CreateClient();  
-        HttpContent httpContent = new StringContent(
-        jsonContent, Encoding.UTF8, "application/json");
-        // int counterBefore =  await DbUtilities.GetActorRecordCount(_context);
+        HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
         HttpResponseMessage response = await client.PostAsync(url, httpContent);
-
-        int counterAfter = await DbUtilities.GetActorRecordCount(_context);
+        
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        // Assert.Equal(counterBefore+1, counterAfter);
         Assert.True(response.Headers.Contains("Location"), 
                 "Headers don't contain location");
     }
