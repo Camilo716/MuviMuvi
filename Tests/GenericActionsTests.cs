@@ -26,13 +26,15 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
     }
 
     const string actorBaseUrl = "api/actor/";
+    const string genreBaseUrl = "api/genre/";
+
     const string actorStringJson =  @"
     {
         ""Name"": ""Leonardo Di Caprio""
     }";
 
     [Theory]
-    [InlineData("/api/genre")]
+    [InlineData(genreBaseUrl)]
     [InlineData(actorBaseUrl)]
     public async Task Get_AllRecordsReturnSuccess(string url)
     {
@@ -47,7 +49,7 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
     }
 
     [Theory]
-    [InlineData("/api/genre/-1")]
+    [InlineData($"{genreBaseUrl}/-1")]
     [InlineData($"{actorBaseUrl}/-1")]
     public async Task Get_When_IdIsNotvalid_Then_ReturnNotFound(string url)
     {
@@ -59,7 +61,7 @@ public partial class ControllerTests : IClassFixture<WebApplicationFactory<Progr
     }
 
     [Theory]
-    [InlineData($"api/genre/-1")]
+    [InlineData($"{genreBaseUrl}/-1")]
     public async Task Delete_When_RemoveRecord_And_ItDoesNotExist_Then_ReturnNotFound(string url)
     {
         HttpClient client = _factory.CreateClient();
